@@ -2,14 +2,36 @@
 <html>
 <head>
 <title>Flex Data Mixer</title>
+<script type="text/javascript">
+    const isPositiveInteger = (str) => {
+        return /^([1-9]\d*)$/.test(str);
+    }
+    const isValidName = (str) => {
+        return /^[a-zA-Z0-9-_ ...]+$/.test(str);
+    }
+    const checkInput = () => {
+        console.log("Checking form input");
+
+        var dnum_input = document.formInput.dnum.value;
+        var fname_input = document.formInput.fname.value;
+
+        if (!isPositiveInteger(dnum_input)) {
+            alert("Error: The number of dialogs must be a positive integer.");
+            return false;
+        } else if (!isValidName(fname_input)) {
+            alert("Error: The filename must only contain alphanumeric characters, dashes, or underscores.");
+            return false; 
+        } else { return true; }
+    }
+</script>
 </head>
 <body>
     <h1>Flex Data Mixer</h1>
-    
-    <form action="/gen" method="get">
-        <p>Number of dialogs to generate:<input type="text" name="dnum"></p>
-        <p>Name of the json file to generate:<input type="text" name="fname"></p>
-        <input type="submit">
+    <p>This tool generates large flex data dialogs by randomly selecting and replacing utterances with their paraphrases.</p>
+    <form action="/gen" method="get" name="formInput">
+        <p>I want to generate <input type="text" name="dnum"> dialogs</p>
+        <p>I want to export to a file called <input type="text" name="fname">.json</p>
+        <input type="submit" value="Generate" onclick="return checkInput()">
     </form>
 </body>
 </html>
